@@ -16,6 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.resources.painterResource
 
+import io.github.kevinah95.kmpkoin.data.UserViewModel
+import org.koin.compose.koinInject
+
 import kmpkoin.shared.generated.resources.Res
 import kmpkoin.shared.generated.resources.compose_multiplatform
 
@@ -24,6 +27,7 @@ import kmpkoin.shared.generated.resources.compose_multiplatform
 fun App() {
     MaterialTheme {
         var showContent by remember { mutableStateOf(false) }
+        val userViewModel = koinInject<UserViewModel>()
         Column(
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.primaryContainer)
@@ -35,7 +39,7 @@ fun App() {
                 Text("Click me!")
             }
             AnimatedVisibility(showContent) {
-                val greeting = remember { Greeting().greet() }
+                val greeting = userViewModel.getGreeting()
                 Column(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally,
